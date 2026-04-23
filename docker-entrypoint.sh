@@ -32,7 +32,7 @@ if [[ -e /opt/fmc_repository/cato-network-ms/.git ]]; then
 	mv /opt/fmc_repository/cato-network-ms /opt/fmc_repository/CommandDefinition/
 elif [[ -d /opt/fmc_repository/cato-network-ms ]]; then
 	log_info "🐞 Not a git repository. Removing the directory for backend compatibility."
-	rm -rf  /opt/fmc_repository/cato-network-ms
+	rm -rf /opt/fmc_repository/cato-network-ms
 fi
 
 if [[ -e /opt/fmc_repository/CommandDefinition/cato-network-ms/.git ]]; then
