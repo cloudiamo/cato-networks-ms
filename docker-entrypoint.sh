@@ -20,22 +20,31 @@ then
 fi
 cd / || exit 1
 
-if [[ -L /opt/fmc_repository/CommandDefinition/cato-network-ms ]]; then
-	log_info "🍄 Removing symlink."
-	rm -f /opt/fmc_repository/CommandDefinition/cato-network-ms
+if [[ -L /opt/fmc_repository/CommandDefinition/cato-networks-ms ]]; then
+	SYMLINK_TARGET=$(readlink -f /opt/fmc_repository/CommandDefinition/cato-networks-ms || true)
+	if [[ -n "$SYMLINK_TARGET" && -e "$SYMLINK_TARGET/.git" ]]; then
+		log_info "🌹 Symlink and git repo found."
+	else
+		log_info "🦥 Removing symlink."
+		rm -f /opt/fmc_repository/CommandDefinition/cato-networks-ms
+	fi
 fi
 
 # for backward compatibility with old backend, move existing repository to CommandDefinition
-if [[ -e /opt/fmc_repository/cato-network-ms/.git ]]; then
+if [[ -e /opt/fmc_repository/cato-networks-ms/.git ]]; then
 	log_info "🦖 Moving existing git repository to /opt/fmc_repository/CommandDefinition for backend compatibility."
 	mkdir -p /opt/fmc_repository/CommandDefinition
-	mv /opt/fmc_repository/cato-network-ms /opt/fmc_repository/CommandDefinition/
-elif [[ -d /opt/fmc_repository/cato-network-ms ]]; then
+	if [[ -e /opt/fmc_repository/CommandDefinition/cato-networks-ms ]]; then
+		log_info "🍄 Removing existing destination directory before move."
+		rm -rf /opt/fmc_repository/CommandDefinition/cato-networks-ms
+	fi
+	mv /opt/fmc_repository/cato-networks-ms /opt/fmc_repository/CommandDefinition/cato-networks-ms
+elif [[ -d /opt/fmc_repository/cato-networks-ms ]]; then
 	log_info "🐞 Not a git repository. Removing the directory for backend compatibility."
-	rm -rf /opt/fmc_repository/cato-network-ms
+	rm -rf  /opt/fmc_repository/cato-networks-ms
 fi
 
-if [[ -e /opt/fmc_repository/CommandDefinition/cato-network-ms/.git ]]; then
+if [[ -e /opt/fmc_repository/CommandDefinition/cato-networks-ms/.git ]]; then
 	log_info "🦔 Skipping upgrade for fellow developer."
 	exit 0
 fi

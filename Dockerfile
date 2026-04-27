@@ -6,12 +6,12 @@ WORKDIR /home/ncuser
 ENV BIN_DIR=/opt/fmc_repository/Process/PythonReference/bin
 RUN install_default_dirs.sh
 
-# Install cato-network-ms {{{
-COPY --chown=1000:1000 . /opt/fmc_repository/CommandDefinition/cato-network-ms
-RUN install_repo_deps.sh /opt/fmc_repository/CommandDefinition/cato-network-ms/
+# Install cato-networks-ms {{{
+COPY --chown=1000:1000 . /opt/fmc_repository/CommandDefinition/cato-networks-ms
+RUN install_repo_deps.sh /opt/fmc_repository/CommandDefinition/cato-networks-ms/
 
 # Cleanup repository {{{
-RUN rm -rf /opt/fmc_repository/CommandDefinition/cato-network-ms/{.git,docker,Dockerfile}
+RUN rm -rf /opt/fmc_repository/CommandDefinition/cato-networks-ms/{.git,docker,Dockerfile}
 # }}}
 # Build tarball {{{
 RUN echo "⏳ Creating fmc-repository.tar.xz" && \
